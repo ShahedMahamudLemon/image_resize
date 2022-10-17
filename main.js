@@ -3,7 +3,6 @@ let imageInput = document.getElementById("imageInput");
 imageInput.addEventListener("change", (event) => {
   let imageFile = event.target.files[0];
   let reader = new FileReader();
-  console.log(imageFile);
   reader.readAsDataURL(imageFile);
 
   reader.onload = (e) => {
@@ -12,7 +11,6 @@ imageInput.addEventListener("change", (event) => {
     newImageEl.src = imageUrl;
 
     newImageEl.onload = (e) => {
-      console.log(e.target.width);
       let canvas = document.createElement("canvas");
       let ratio = WIDTH / e.target.width;
       canvas.width = WIDTH;
