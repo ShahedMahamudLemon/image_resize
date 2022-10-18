@@ -1,6 +1,16 @@
-const WIDTH = 200;
+let WIDTH = 200;
+let imageQuality = 0.8;
 let resizedImageUrl;
 let imageInput = document.getElementById("imageInput");
+let setWidth = document.getElementById("imgWidthInput");
+let setImageQuality = document.getElementById("imgQuality");
+setWidth.addEventListener("change", (e) => {
+  WIDTH = e.target.value;
+});
+setImageQuality.addEventListener("change", (e) => {
+  imageQuality = e.target.value;
+});
+
 imageInput.addEventListener("change", (event) => {
   let imageFile = event.target.files[0];
   let reader = new FileReader();
@@ -18,7 +28,7 @@ imageInput.addEventListener("change", (event) => {
       canvas.height = e.target.height * ratio;
       const context = canvas.getContext("2d");
       context.drawImage(newImageEl, 0, 0, canvas.width, canvas.height);
-      let newImageUrl = context.canvas.toDataURL("image/jpg", 80);
+      let newImageUrl = context.canvas.toDataURL("image/jpeg", imageQuality);
 
       let newImage = document.createElement("img");
       newImage.src = newImageUrl;
@@ -35,7 +45,7 @@ const downloadButtonFunc = async () => {
 
   const link = document.createElement("a");
   link.href = imageURL;
-  link.download = "resize_image";
+  link.download = "resize_image.jpeg";
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
