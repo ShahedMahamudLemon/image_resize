@@ -1,4 +1,5 @@
 const WIDTH = 200;
+let resizedImageUrl;
 let imageInput = document.getElementById("imageInput");
 imageInput.addEventListener("change", (event) => {
   let imageFile = event.target.files[0];
@@ -21,7 +22,21 @@ imageInput.addEventListener("change", (event) => {
 
       let newImage = document.createElement("img");
       newImage.src = newImageUrl;
+      resizedImageUrl = newImageUrl;
       document.getElementById("imageWrapper").appendChild(newImage);
     };
   };
 });
+
+const downloadButtonFunc = async () => {
+  const image = await fetch(resizedImageUrl);
+  const imageBlog = await image.blob();
+  const imageURL = URL.createObjectURL(imageBlog);
+
+  const link = document.createElement("a");
+  link.href = imageURL;
+  link.download = "resize_image";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
